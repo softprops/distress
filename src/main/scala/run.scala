@@ -3,11 +3,11 @@ package distress
 import dispatch._
 import java.util.concurrent.atomic.AtomicInteger
 import com.ning.http.client.{
-  AsyncHttpClient, RequestBuilder, Response
+  AsyncHttpClient, AsyncHttpClientConfig, Response
 }
 
 class Noop extends FunctionHandler[Response](identity)
- 
+
 class Run(uri: String, concurrency: Int, total: Int) {
   val req = url(uri)
   val client = new Http {
