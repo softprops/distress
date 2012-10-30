@@ -13,16 +13,24 @@ object ConsoleReport extends Report with Math {
     println("uri: %s concurrency: %s total: %s" format(s.uri,
                                                        s.concurrency,
                                                        s.total))
-    println("%20s\t%s" format("errors", s.errors))
-    println("%20s\t%s" format("completed", s.completed))
-    println("min %s max %s" format(s.timings.min, s.timings.max))
+    col("errors", s.errors)
+    col("completed", s.completed)
+    col("min", s.timings.min)
+    col("max", s.timings.max)
+    col("errors", s.errors)
+    col("completed", s.completed)
+
     val avg = mean(s.timings)
-    println("%20s\t%s" format("μ", avg))
-    println("%20s\t%s" format("σ", stddev(s.timings, avg)))
-    println("%20s\t%s" format("status","count"))
-    s.byStatus map {
-      case (s, n) =>
-        println("%20s\t%s" format(s,n))
-    }
+    col("μ", avg)
+    col("σ", stddev(s.timings, avg))
+    col("status","count")
+    s.byStatus.foreach(col)
+  }
+
+  private def col(label: Any, value: Any): Unit =
+    println("%20s\t%s" format(label, value))
+
+  private def col(t: (Int, Int)): Unit = t match {
+    case (l, r) => col(l.toString, r)
   }
 }

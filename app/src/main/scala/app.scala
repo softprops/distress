@@ -4,15 +4,16 @@ import xsbti.{ AppMain, AppConfiguration }
 
 object App {
   def apply(args: Array[String]): Int = {
-    val (concur, req) = args match {
-      case Array() => (10, 10)
-      case Array(n) => (n.toInt, 10)
-      case Array(c, r) => (c.toInt, r.toInt)
+    val (url, concur, req) = args match {
+      case Array() => ("http://www.google.com", 10, 10)
+      case Array(url) => (url, 10, 10)
+      case Array(url, c) => (url, c.toInt, 10)
+      case Array(url, c, r) => (url, c.toInt, r.toInt)
     }
-    val r = Run("www.google.com", concur, req)_
-    for(i <- 0 until 4) r(SilentReport)
+    val r = Run(url, concur, req)_
+    for(i <- 0 until 4) r(SilentReport) // heat blanket for jvm
     r(ConsoleReport)
-    1
+    0
   }
 }
 

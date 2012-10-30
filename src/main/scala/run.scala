@@ -15,7 +15,6 @@ object Run {
     @volatile var timings = List.empty[Long]
     val completed = newCounter
     val errors = newCounter
-    val start = System.currentTimeMillis
     val requests = for (r <- 0 until total) yield {
       val ts = new Timestamp
       client(req > ts)
@@ -36,7 +35,7 @@ object Run {
             errors.incrementAndGet()
         })
     }
-    (Http.promise.all(requests)
+    (Promise.all(requests)
      .onComplete {
        case r =>
          client.shutdown()
