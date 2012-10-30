@@ -35,7 +35,7 @@ object Run {
             errors.incrementAndGet()
         })
     }
-    (Promise.all(requests)
+    (Http.promise.all(requests)
      .onComplete {
        case r =>
          client.shutdown()
