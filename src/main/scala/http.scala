@@ -35,24 +35,8 @@ class Stamper extends RequestFilter {
 
 object Client {
   def of(concurrency: Int) =
-     Http.copy(client = mkClient(concurrency))
-    /*new Http { //0.9.2 interface
-      override lazy val client = mkClient(concurrency)
-    }*/
-   
-  private def mkClient(concurrency: Int) =
-    new AsyncHttpClient(
-      new AsyncHttpClientConfig.Builder()
-        .setAsyncHttpClientProviderConfig(
-          new NettyAsyncHttpProviderConfig().addProperty(
-            NettyAsyncHttpProviderConfig.BOSS_EXECUTOR_SERVICE,
-            juc.Executors.newCachedThreadPool(
-              DaemonThreads.factory
-            )
-          )
-        )
+     new Http().configure {
+       _.addRequestFilter(new Stamper)
         .setMaximumConnectionsPerHost(concurrency)
-        .setMaxRequestRetry(3)
-        .addRequestFilter(new Stamper)
-        .build())
+     }
 }
