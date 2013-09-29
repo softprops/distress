@@ -1,12 +1,8 @@
 package distress
 
-import dispatch.{ DaemonThreads, FunctionHandler, Http }
-import com.ning.http.client.{
-  AsyncHttpClient, AsyncHttpClientConfig, Response
-}
-import com.ning.http.client.providers.netty.NettyAsyncHttpProviderConfig
+import dispatch.{ FunctionHandler, Http }
+import com.ning.http.client.Response
 import com.ning.http.client.filter.RequestFilter
-import java.util.{ concurrent => juc }
 
 /**
  * A noop handler that simply tracks time in milliseconds

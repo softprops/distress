@@ -1,4 +1,4 @@
-import java.util.concurrent.atomic.AtomicInteger
+import java.util.concurrent.atomic.AtomicLong
 package object distress {
-  def newCounter = new AtomicInteger(0)
+  def newCounter = new AtomicLong(0)
 }
