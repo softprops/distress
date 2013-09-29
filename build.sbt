@@ -1,8 +1,10 @@
-organization := "organization"
+organization := "me.lessis"
 
 name := "distress"
 
-libraryDependencies += "net.databinder.dispatch" %% "dispatch-core" % "0.11.0"
+version := "0.1.0-SNAPSHOT"
+
+libraryDependencies += "net.databinder.dispatch" %% "dispatch-json4s-native" % "0.11.0"
 
 libraryDependencies += "org.slf4j" % "slf4j-jdk14" % "1.6.2"
 
