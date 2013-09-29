@@ -1,13 +1,15 @@
 package distress
 
-import dispatch.{ FunctionHandler, Http }
+import dispatch.{ OkFunctionHandler, Http }
 import com.ning.http.client.Response
 import com.ning.http.client.filter.RequestFilter
 
 /**
- * A noop handler that simply tracks time in milliseconds
+ * A noop handler that simply tracks time in milliseconds. Requests
+ * that return a non-200 status response will throw a dispatch.StatusCode
+ * exception
  */
-class Timestamp extends FunctionHandler[Response](identity) {
+class Timestamp extends OkFunctionHandler[Response](identity) {
   lazy val began = System.currentTimeMillis
   def sinceRequested = System.currentTimeMillis - began
   def begin = began
