@@ -9,7 +9,6 @@ case class Stats(uri: String, concurrency: Int, total: Int,
                  byStatus: Map[Int, Long])
 
 object Run {
-  import dispatch.retry.Success._
   def apply(uri: String, concurrency: Int, total: Int)(report: Report) = {
     val request = url(uri)
     val client = Client.of(concurrency)
@@ -23,7 +22,7 @@ object Run {
       res.onComplete {
         case _ =>
           completed.incrementAndGet()
-        timings = ts.sinceRequested :: timings
+          timings = ts.sinceRequested :: timings
       }
       res.onSuccess {
         case r =>
